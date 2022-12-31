@@ -1,0 +1,57 @@
+﻿@model StephenCoreMed.Models.ViewModels.DocumentVM
+<style>
+    #document_manag_sidebar {
+        display: block !important;
+    }
+</style>
+<br />
+@using (Html.BeginForm("UploadDocument", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <!-- general form elements disabled -->
+                <div class="card card-warning">
+                    <div class="card-header" style="background-color:#343a40">
+                        <h3 class="card-title" style="color:white"> Upload Document</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Document Name</label>
+                            @Html.EditorFor(model => model.D_Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.D_Name, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    @Html.TextBoxFor(m => m.Files, new { @class = "input-group-text", type = "file" })
+                                    <br/>
+                                    @Html.ValidationMessageFor(m => m.Files, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- input states -->
+                        <div class="form-group">
+                            <center> <button type="submit" class="btn btn-primary"> Upload Document</button> </center>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- general form elements disabled -->
+                <!-- /.card -->
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+}
+

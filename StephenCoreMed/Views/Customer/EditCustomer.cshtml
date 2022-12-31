@@ -1,0 +1,161 @@
+﻿@model StephenCoreMed.Models.ViewModels.Customer_VM
+@{
+    ViewBag.Title = "EditCustomer";
+}
+
+<style>
+    #customer_manag_sidebar {
+        display: block !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 37px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 5px !important;
+    }
+</style>
+<link href="~/AdminLTEFiles/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<br />
+@using (Html.BeginForm("EditCustomer", "Customer", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        @Html.HiddenFor(m => m.Customer_Id)
+
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <!-- general form elements disabled -->
+                <div class="card card-warning">
+                    <div class="card-header" style="background-color:#343a40">
+                        <h3 class="card-title" style="color:white"> Update Companies Employee Information</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Asset Type</label>
+                                    @Html.DropDownListFor(m => m.Customer_Title, new List<SelectListItem>
+                                        {
+                                        new SelectListItem { Text = "Mr.", Value = "Mr." },
+                                        new SelectListItem { Text = "Mrs.", Value = "Mrs." },
+                                        new SelectListItem { Text = "Ms.", Value = "Ms." },
+                                        new SelectListItem { Text = "Miss.", Value = "Miss." },
+
+                                    }, "Select Customer Title", new { @class = "form-control", id = "c_title" })
+                                    @Html.ValidationMessageFor(m => m.Customer_Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Enter Name</label>
+                                    @Html.EditorFor(model => model.Customer_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Customer_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Select Company</label>
+                                    @Html.DropDownListFor(model => model.C_ID_Fk, (IEnumerable<SelectListItem>)ViewBag.CompanyList, "Select Company", new { @class = "form-control", id = "company_list" })
+                                    @Html.ValidationMessageFor(m => m.C_ID_Fk, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Cell Number</label>
+                                    @Html.EditorFor(model => model.Customer_CellNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Customer_CellNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Phone Number</label>
+                                    @Html.EditorFor(model => model.Customer_PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Customer_PhoneNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Email</label>
+                                    @Html.EditorFor(model => model.Customer_Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Customer_Email, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Country</label>
+                                    @Html.EditorFor(model => model.Customer_Country, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Customer_Country, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter State</label>
+                                    @Html.EditorFor(model => model.Customer_State, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Customer_State, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter City</label>
+                                    @Html.EditorFor(model => model.Customer_City, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Customer_City, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Address</label>
+                            @Html.EditorFor(model => model.Customer_Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Customer_Address, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            <label> Description</label>
+                            @Html.TextAreaFor(m => m.Customer_Description, new { @class = "form-control", id = "description" })
+                            @Html.ValidationMessageFor(m => m.Customer_Description, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- input states -->
+                        <div class="form-group">
+                            <center> <button type="submit" class="btn btn-primary"> Update Customer</button> </center>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- general form elements disabled -->
+                <!-- /.card -->
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+}
+<script src="~/AdminLTEFiles/plugins/jquery/jquery.js"></script>
+<script src="~/AdminLTEFiles/plugins/select2/js/select2.min.js"></script>
+<script src="~/AdminLTEFiles/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#company_list").select2();
+    });
+</script>
+

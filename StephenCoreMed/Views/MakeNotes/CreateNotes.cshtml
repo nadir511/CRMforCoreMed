@@ -1,0 +1,230 @@
+﻿@model StephenCoreMed.Models.ViewModels.NotesCombineVM
+@{
+    ViewBag.Title = "CreateNotes";
+}
+
+<style>
+    #notes_manag_sidebar {
+        display: block !important;
+    }
+    .select2-container .select2-selection--single {
+        height: 37px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 5px !important;
+    }
+</style>
+@{
+    ViewBag.Title = "NotesList";
+}
+<link href="~/AdminLTEFiles/plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+<h2 class="rounded " style="background-color:#343a40;color:white"><center>Notes List</center></h2>
+<table id="CustomerTable" class="table table-striped table-bordered" style="width:100%">
+
+    <thead>
+        <tr>
+            <th style="display:none">ID</th>
+            <th>Note Title</th>
+            <th>Detail</th>
+            <th>Created By</th>
+            <th>Creation Date</th>
+            <th>Is Done?</th>
+            <th>Update</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.ListnotesVMs.Count(); i++)
+        {
+
+        <tr>
+            <td style="display:none">
+                @Html.HiddenFor(m => Model.ListnotesVMs[i].N_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.ListnotesVMs[i].N_Topic)
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.ListnotesVMs[i].N_Discussion)
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.ListnotesVMs[i].CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(m => Model.ListnotesVMs[i].CreatedDate)
+            </td>
+            <td>
+                @Html.CheckBoxFor(m => Model.ListnotesVMs[i].IsDone, new { id = "isdone_" + Model.ListnotesVMs[i].N_Id })
+            </td>
+
+            <td>
+                <button type="button" class="btn btn-primary" onclick="UpdateRow(@Model.ListnotesVMs[i].N_Id)">Update</button>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="myModalContent">
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="createModalContent">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("createNewNote", "MakeNotes", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <!-- general form elements disabled -->
+                            <div class="card card-warning">
+                                <div class="card-header" style="background-color:#343a40">
+                                    <h3 class="card-title" style="color:white"> Create Notes</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Select Company</label>
+                                                <br/>
+                                                @Html.DropDownListFor(m => Model.NotesVM.C_Id_FK, (IEnumerable<SelectListItem>)ViewBag.CompanyList, "Select Company", new { @class = "form-control", id = "company_list" })
+                                                @Html.ValidationMessageFor(m => Model.NotesVM.C_Id_FK, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Select Customer</label>
+                                                <br/>
+                                                @Html.DropDownListFor(m => Model.NotesVM.Customer_Id_FK, (IEnumerable<SelectListItem>)ViewBag.CustomerList, "Select Customer", new { @class = "form-control", id = "customer_list" })
+                                                @Html.ValidationMessageFor(m => Model.NotesVM.Customer_Id_FK, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Enter Notes Title</label>
+                                                @Html.TextBoxFor(m => Model.NotesVM.N_Topic, new { @class = "form-control", placeholder = "Enter Title", required = "required" })
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label>Enter Notes</label>
+                                                @Html.TextBoxFor(m => Model.NotesVM.N_Discussion, new { @class = "form-control", placeholder = "Enter Description", required = "required" })
+                                                @Html.ValidationMessageFor(m => Model.NotesVM.N_Discussion, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- input states -->
+                                    <div class="form-group">
+                                        <center> <button type="submit" class="btn btn-primary"> Create Note</button> </center>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                            <!-- general form elements disabled -->
+                            <!-- /.card -->
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script src="~/AdminLTEFiles/plugins/jquery/jquery.js"></script>
+<script src="~/AdminLTEFiles/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/AdminLTEFiles/plugins/select2/js/select2.min.js"></script>
+<script src="~/AdminLTEFiles/plugins/datatables/jquery.dataTables.js"></script>
+<script src="~/AdminLTEFiles/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#company_list").select2();
+        $("#customer_list").select2();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#CustomerTable').DataTable();
+    });
+    function UpdateRow(id)
+    {
+        if ($("#isdone_" + id).is(':checked')) {
+            status = true
+        }
+        else
+        {
+            status = false
+        }
+        RowId = id;
+        $.ajax({
+                    type: "GET",
+                     url: '@Url.Action("UpdateNotes", "MakeNotes")',
+                    data: {
+                        N_Id: id,
+                        isDone: status
+                    },
+                    success: function(data)
+                {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                     },
+
+                });
+
+    }
+    function CreateNot()
+    {
+        $.ajax({
+                type: 'POST',
+                url: '@Url.Action("LoadCustomers_Company")',
+                dataType: 'json',
+        });
+
+        $('#createModal').modal('show');
+
+    }
+        $("#company_list").change(function () {
+        $("#customer_list").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("LoadCustomers")',
+                dataType: 'json',
+                data: { CompanyID: $("#company_list").val() },
+                success: function (CustomerList) {
+                    $("#customer_list").append('<option value="">Select Customer</option>');
+                    $.each(CustomerList, function (i, customer) {
+                        $("#customer_list").append('<option value="' + customer.Value + '">' +
+                            customer.Text + '</option>');
+                    });
+                    $("#customer_list").prop("disabled", false);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Assets.');
+                }
+            });
+            return false;
+        })
+
+</script>
+
+

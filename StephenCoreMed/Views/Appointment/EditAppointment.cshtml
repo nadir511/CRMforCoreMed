@@ -1,0 +1,135 @@
+﻿@model StephenCoreMed.Models.ViewModels.AppoinmentVM
+<style>
+    #appointment_manag_sidebar {
+        display: block !important;
+    }
+    .select2-container .select2-selection--single {
+        height: 37px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 5px !important;
+    }
+</style>
+<link href="~/Scripts/bootstrap-datetimepicker.css" rel="stylesheet" />
+<link href="~/AdminLTEFiles/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<br />
+@using (Html.BeginForm("EditAppointment", "Appointment", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        @Html.HiddenFor(m => m.A_ID);
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <!-- general form elements disabled -->
+                <div class="card card-warning">
+                    <div class="card-header" style="background-color:#343a40">
+                        <h3 class="card-title" style="color:white"> Edit Appointment</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Enter Appointment Title</label>
+                                    @Html.EditorFor(model => model.A_Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.A_Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Appointment Date</label>
+                                    @Html.EditorFor(model => model.A_Date, new { htmlAttributes = new { @class = "form-control", @id = "SelectedDate" } })
+                                    @Html.ValidationMessageFor(m => m.A_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Company</label>
+                                    @Html.DropDownListFor(model => model.C_Id_FK, (IEnumerable<SelectListItem>)ViewBag.CompanyList, "Select Company", new { @class = "form-control", id = "company_list" })
+                                    @Html.ValidationMessageFor(m => m.C_Id_FK, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Customer</label>
+                                    @Html.DropDownListFor(model => model.CE_Id_FK, (IEnumerable<SelectListItem>)ViewBag.CustomerList, "Select Customer", new { @class = "form-control", id = "customer_list" })
+                                    @Html.ValidationMessageFor(m => m.CE_Id_FK, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Appointment Description</label>
+                            @Html.TextAreaFor(m => m.A_Description, new { @class = "form-control", id = "description" })
+                            @Html.ValidationMessageFor(m => m.A_Description, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- input states -->
+                        <div class="form-group">
+                            <center> <button type="submit" class="btn btn-primary"> Update Appointment</button> </center>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- general form elements disabled -->
+                <!-- /.card -->
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+}
+<script src="~/AdminLTEFiles/plugins/jquery/jquery.js"></script>
+<script src="~/AdminLTEFiles/plugins/select2/js/select2.min.js"></script>
+<script src="~/AdminLTEFiles/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#company_list").select2();
+        $("#customer_list").select2();
+        $("#employee_list").select2();
+
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#SelectedDate').datepicker({
+
+        });
+    });
+
+    $("#company_list").change(function () {
+        $("#customer_list").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("LoadCustomers")',
+                dataType: 'json',
+                data: { CompanyID: $("#company_list").val() },
+                success: function (CustomerList) {
+                    $("#customer_list").append('<option value="">Select Customer</option>');
+                    $.each(CustomerList, function (i, customer) {
+                        $("#customer_list").append('<option value="' + customer.Value + '">' +
+                            customer.Text + '</option>');
+                    });
+                    $("#customer_list").prop("disabled", false);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Assets.');
+                }
+            });
+            return false;
+        })
+</script>

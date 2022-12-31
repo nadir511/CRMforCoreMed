@@ -1,0 +1,124 @@
+﻿@model StephenCoreMed.Models.ViewModels.CompanyVM
+<style>
+    #company_manag_sidebar {
+        display: block !important;
+    }
+</style>
+<br />
+@using (Html.BeginForm("CreateCompany", "Company", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <!-- general form elements disabled -->
+                <div class="card card-warning">
+                    <div class="card-header" style="background-color:#343a40">
+                        <h3 class="card-title" style="color:white"> Create Company</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Enter Company Name</label>
+                                    @Html.EditorFor(model => model.C_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.C_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Enter Company Email</label>
+                                        @Html.EditorFor(model => model.C_Email, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.C_Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Cell Number</label>
+                                    @Html.EditorFor(model => model.C_CellNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.C_CellNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Phone Number</label>
+                                    @Html.EditorFor(model => model.C_PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.C_PhoneNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Website</label>
+                                    @Html.EditorFor(model => model.C_Website, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.C_Website, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Country</label>
+                                    @Html.EditorFor(model => model.C_Country, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.C_Country, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter State</label>
+                                    @Html.EditorFor(model => model.C_State, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.C_State, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter City</label>
+                                    @Html.EditorFor(model => model.C_City, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.C_City, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Address</label>
+                            @Html.EditorFor(model => model.C_Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.C_Address, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            <label> Description</label>
+                            @Html.TextAreaFor(m => m.C_Description, new { @class = "form-control", id = "description" })
+                            @Html.ValidationMessageFor(m => m.C_Description, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- input states -->
+                        <div class="form-group">
+                            <center> <button type="submit" class="btn btn-primary"> Create Comapny</button> </center>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- general form elements disabled -->
+                <!-- /.card -->
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,138 @@
+﻿@model StephenCoreMed.Models.ViewModels.EmployeeVM
+<style>
+    #employee_manag_sidebar {
+        display: block !important;
+    }
+</style>
+<br />
+@using (Html.BeginForm("EditEmployee", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        @Html.HiddenFor(m=>m.Employee_Id)
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <!-- general form elements disabled -->
+                <div class="card card-warning">
+                    <div class="card-header" style="background-color:#343a40">
+                        <h3 class="card-title" style="color:white"> Edit Employee</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Title</label>
+                                    @Html.DropDownListFor(m => m.Employee_Title, new List<SelectListItem>
+                                        {
+                                        new SelectListItem { Text = "Mr.", Value = "Mr." },
+                                        new SelectListItem { Text = "Mrs.", Value = "Mrs." },
+                                        new SelectListItem { Text = "Ms.", Value = "Ms." },
+                                        new SelectListItem { Text = "Miss.", Value = "Miss." },
+
+                                    }, "Select Customer Title", new { @class = "form-control", id = "c_title" })
+                                    @Html.ValidationMessageFor(m => m.Employee_Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Enter Name</label>
+                                    @Html.EditorFor(model => model.Employee_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Employee_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Select Department</label>
+                                        @Html.EditorFor(model => model.DepartmentName, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Cell Number</label>
+                                    @Html.EditorFor(model => model.Employee_CellNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Employee_CellNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Phone Number</label>
+                                    @Html.EditorFor(model => model.Employee_PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Employee_PhoneNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Email</label>
+                                    @Html.EditorFor(model => model.Employee_Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Employee_Email, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter Country</label>
+                                    @Html.EditorFor(model => model.Employee_Country, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Employee_Country, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter State</label>
+                                    @Html.EditorFor(model => model.Employee_State, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Employee_State, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Enter City</label>
+                                    @Html.EditorFor(model => model.Employee_City, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Employee_City, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Address</label>
+                            @Html.EditorFor(model => model.Employee_Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Employee_Address, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            <label> Description</label>
+                            @Html.TextAreaFor(m => m.Employee_Description, new { @class = "form-control", id = "description" })
+                            @Html.ValidationMessageFor(m => m.Employee_Description, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- input states -->
+                        <div class="form-group">
+                            <center> <button type="submit" class="btn btn-primary"> Update Employee</button> </center>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- general form elements disabled -->
+                <!-- /.card -->
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+}

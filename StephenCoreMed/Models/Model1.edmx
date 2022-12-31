@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CoreMedModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="A_ID" />
+          </Key>
+          <Property Name="A_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="A_Title" Type="nvarchar" MaxLength="500" />
+          <Property Name="A_Description" Type="nvarchar(max)" />
+          <Property Name="A_Date" Type="datetime" />
+          <Property Name="C_Id_FK" Type="int" />
+          <Property Name="CE_Id_FK" Type="int" />
+          <Property Name="CreatedBY" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="C_Id" />
+          </Key>
+          <Property Name="C_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="C_Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="C_Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="C_PhoneNumber" Type="nvarchar" MaxLength="30" />
+          <Property Name="C_CellNumber" Type="nvarchar" MaxLength="30" />
+          <Property Name="C_City" Type="nvarchar" MaxLength="150" />
+          <Property Name="C_State" Type="nvarchar" MaxLength="150" />
+          <Property Name="C_Country" Type="nvarchar" MaxLength="150" />
+          <Property Name="C_Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="C_Website" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="C_Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="D_Id" />
+          </Key>
+          <Property Name="D_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="D_Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="D_File" Type="varbinary(max)" />
+          <Property Name="D_Original_Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="C_Id_FK" Type="int" />
+          <Property Name="Customer_Id_FK" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Doc_Type" Type="nvarchar" MaxLength="20" />
+          <Property Name="Doc_Offer_Date" Type="datetime" />
+          <Property Name="Doc_Number" Type="nvarchar(max)" />
+          <Property Name="Doc_Writer_LoggedIn" Type="nvarchar(max)" />
+          <Property Name="Doc_Writer_EnterByUser" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Employee_Customer">
+          <Key>
+            <PropertyRef Name="CE_Id" />
+          </Key>
+          <Property Name="CE_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CE_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="CE_Title" Type="nvarchar" MaxLength="20" />
+          <Property Name="CE_Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="CE_PhoneNumber" Type="nvarchar" MaxLength="30" />
+          <Property Name="CE_CellNumber" Type="nvarchar" MaxLength="30" />
+          <Property Name="CE_Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="C_ID_Fk" Type="int" />
+          <Property Name="CE_Description" Type="nvarchar(max)" />
+          <Property Name="CE_City" Type="nvarchar" MaxLength="150" />
+          <Property Name="CE_State" Type="nvarchar" MaxLength="150" />
+          <Property Name="CE_Country" Type="nvarchar" MaxLength="150" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="EC_Type" Type="nvarchar" MaxLength="100" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Notes">
+          <Key>
+            <PropertyRef Name="N_Id" />
+          </Key>
+          <Property Name="N_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="N_Topic" Type="nvarchar(max)" />
+          <Property Name="N_Discussion" Type="nvarchar(max)" />
+          <Property Name="IsDone" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="C_Id_FK" Type="int" />
+          <Property Name="Customer_Id_FK" Type="int" />
+        </EntityType>
+        <Association Name="FK_Appointment_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="C_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Employee_Customer">
+          <End Role="Employee_Customer" Type="Self.Employee_Customer" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Customer">
+              <PropertyRef Name="CE_Id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="CE_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="C_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Employee_Customer">
+          <End Role="Employee_Customer" Type="Self.Employee_Customer" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Customer">
+              <PropertyRef Name="CE_Id" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="Customer_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Employee_Customer" Type="Self.Employee_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Employee_Customer">
+              <PropertyRef Name="C_ID_Fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notes_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Notes">
+              <PropertyRef Name="C_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notes_Employee_Customer">
+          <End Role="Employee_Customer" Type="Self.Employee_Customer" Multiplicity="0..1" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Customer">
+              <PropertyRef Name="CE_Id" />
+            </Principal>
+            <Dependent Role="Notes">
+              <PropertyRef Name="Customer_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CoreMedModelStoreContainer">
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Customer" EntityType="Self.Employee_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Appointment_Company" Association="Self.FK_Appointment_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Employee_Customer" Association="Self.FK_Appointment_Employee_Customer">
+            <End Role="Employee_Customer" EntitySet="Employee_Customer" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Company" Association="Self.FK_Documents_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Employee_Customer" Association="Self.FK_Documents_Employee_Customer">
+            <End Role="Employee_Customer" EntitySet="Employee_Customer" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Company" Association="Self.FK_Employee_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Employee_Customer" EntitySet="Employee_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notes_Company" Association="Self.FK_Notes_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Notes" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notes_Employee_Customer" Association="Self.FK_Notes_Employee_Customer">
+            <End Role="Employee_Customer" EntitySet="Employee_Customer" />
+            <End Role="Notes" EntitySet="Notes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CoreMedModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CoreMedEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Appointments" EntityType="CoreMedModel.Appointment" />
+          <EntitySet Name="AspNetRoles" EntityType="CoreMedModel.AspNetRole" />
+          <EntitySet Name="Companies" EntityType="CoreMedModel.Company" />
+          <EntitySet Name="Employee_Customer" EntityType="CoreMedModel.Employee_Customer" />
+          <EntitySet Name="Notes" EntityType="CoreMedModel.Note" />
+          <AssociationSet Name="FK_Appointment_Company" Association="CoreMedModel.FK_Appointment_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Employee_Customer" Association="CoreMedModel.FK_Appointment_Employee_Customer">
+            <End Role="Employee_Customer" EntitySet="Employee_Customer" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Company" Association="CoreMedModel.FK_Employee_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Employee_Customer" EntitySet="Employee_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notes_Company" Association="CoreMedModel.FK_Notes_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notes_Employee_Customer" Association="CoreMedModel.FK_Notes_Employee_Customer">
+            <End Role="Employee_Customer" EntitySet="Employee_Customer" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <EntitySet Name="Documents" EntityType="CoreMedModel.Document" />
+          <AssociationSet Name="FK_Documents_Company" Association="CoreMedModel.FK_Documents_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Document" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Employee_Customer" Association="CoreMedModel.FK_Documents_Employee_Customer">
+            <End Role="Employee_Customer" EntitySet="Employee_Customer" />
+            <End Role="Document" EntitySet="Documents" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="A_ID" />
+          </Key>
+          <Property Name="A_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="A_Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="A_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="A_Date" Type="DateTime" Precision="3" />
+          <Property Name="C_Id_FK" Type="Int32" />
+          <Property Name="CE_Id_FK" Type="Int32" />
+          <Property Name="CreatedBY" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Company" Relationship="CoreMedModel.FK_Appointment_Company" FromRole="Appointment" ToRole="Company" />
+          <NavigationProperty Name="Employee_Customer" Relationship="CoreMedModel.FK_Appointment_Employee_Customer" FromRole="Appointment" ToRole="Employee_Customer" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="C_Id" />
+          </Key>
+          <Property Name="C_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="C_Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="C_PhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="C_CellNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="C_City" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="C_State" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="C_Country" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="C_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="C_Website" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="C_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Appointments" Relationship="CoreMedModel.FK_Appointment_Company" FromRole="Company" ToRole="Appointment" />
+          <NavigationProperty Name="Employee_Customer" Relationship="CoreMedModel.FK_Employee_Company" FromRole="Company" ToRole="Employee_Customer" />
+          <NavigationProperty Name="Notes" Relationship="CoreMedModel.FK_Notes_Company" FromRole="Company" ToRole="Note" />
+          <NavigationProperty Name="Documents" Relationship="CoreMedModel.FK_Documents_Company" FromRole="Company" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Employee_Customer">
+          <Key>
+            <PropertyRef Name="CE_Id" />
+          </Key>
+          <Property Name="CE_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CE_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CE_Title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CE_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CE_PhoneNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CE_CellNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CE_Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="C_ID_Fk" Type="Int32" />
+          <Property Name="CE_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CE_City" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CE_State" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CE_Country" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EC_Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Appointments" Relationship="CoreMedModel.FK_Appointment_Employee_Customer" FromRole="Employee_Customer" ToRole="Appointment" />
+          <NavigationProperty Name="Company" Relationship="CoreMedModel.FK_Employee_Company" FromRole="Employee_Customer" ToRole="Company" />
+          <NavigationProperty Name="Notes" Relationship="CoreMedModel.FK_Notes_Employee_Customer" FromRole="Employee_Customer" ToRole="Note" />
+          <NavigationProperty Name="Documents" Relationship="CoreMedModel.FK_Documents_Employee_Customer" FromRole="Employee_Customer" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="N_Id" />
+          </Key>
+          <Property Name="N_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="N_Topic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="N_Discussion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDone" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="C_Id_FK" Type="Int32" />
+          <Property Name="Customer_Id_FK" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="CoreMedModel.FK_Notes_Company" FromRole="Note" ToRole="Company" />
+          <NavigationProperty Name="Employee_Customer" Relationship="CoreMedModel.FK_Notes_Employee_Customer" FromRole="Note" ToRole="Employee_Customer" />
+        </EntityType>
+        <Association Name="FK_Appointment_Company">
+          <End Type="CoreMedModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="CoreMedModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="C_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Employee_Customer">
+          <End Type="CoreMedModel.Employee_Customer" Role="Employee_Customer" Multiplicity="0..1" />
+          <End Type="CoreMedModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Customer">
+              <PropertyRef Name="CE_Id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="CE_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Company">
+          <End Type="CoreMedModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="CoreMedModel.Employee_Customer" Role="Employee_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Employee_Customer">
+              <PropertyRef Name="C_ID_Fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notes_Company">
+          <End Type="CoreMedModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="CoreMedModel.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="C_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notes_Employee_Customer">
+          <End Type="CoreMedModel.Employee_Customer" Role="Employee_Customer" Multiplicity="0..1" />
+          <End Type="CoreMedModel.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Customer">
+              <PropertyRef Name="CE_Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="Customer_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="D_Id" />
+          </Key>
+          <Property Name="D_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="D_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="D_File" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="D_Original_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="C_Id_FK" Type="Int32" />
+          <Property Name="Customer_Id_FK" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Doc_Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Doc_Offer_Date" Type="DateTime" Precision="3" />
+          <Property Name="Doc_Number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Doc_Writer_LoggedIn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Doc_Writer_EnterByUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Company" Relationship="CoreMedModel.FK_Documents_Company" FromRole="Document" ToRole="Company" />
+          <NavigationProperty Name="Employee_Customer" Relationship="CoreMedModel.FK_Documents_Employee_Customer" FromRole="Document" ToRole="Employee_Customer" />
+        </EntityType>
+        <Association Name="FK_Documents_Company">
+          <End Type="CoreMedModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="CoreMedModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="C_Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="C_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Employee_Customer">
+          <End Type="CoreMedModel.Employee_Customer" Role="Employee_Customer" Multiplicity="0..1" />
+          <End Type="CoreMedModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Customer">
+              <PropertyRef Name="CE_Id" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Customer_Id_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CoreMedModelStoreContainer" CdmEntityContainer="CoreMedEntities" >
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="CoreMedModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBY" ColumnName="CreatedBY" />
+                <ScalarProperty Name="CE_Id_FK" ColumnName="CE_Id_FK" />
+                <ScalarProperty Name="C_Id_FK" ColumnName="C_Id_FK" />
+                <ScalarProperty Name="A_Date" ColumnName="A_Date" />
+                <ScalarProperty Name="A_Description" ColumnName="A_Description" />
+                <ScalarProperty Name="A_Title" ColumnName="A_Title" />
+                <ScalarProperty Name="A_ID" ColumnName="A_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="CoreMedModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="CoreMedModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="C_Description" ColumnName="C_Description" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="C_Website" ColumnName="C_Website" />
+                <ScalarProperty Name="C_Email" ColumnName="C_Email" />
+                <ScalarProperty Name="C_Country" ColumnName="C_Country" />
+                <ScalarProperty Name="C_State" ColumnName="C_State" />
+                <ScalarProperty Name="C_City" ColumnName="C_City" />
+                <ScalarProperty Name="C_CellNumber" ColumnName="C_CellNumber" />
+                <ScalarProperty Name="C_PhoneNumber" ColumnName="C_PhoneNumber" />
+                <ScalarProperty Name="C_Address" ColumnName="C_Address" />
+                <ScalarProperty Name="C_Name" ColumnName="C_Name" />
+                <ScalarProperty Name="C_Id" ColumnName="C_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Customer">
+            <EntityTypeMapping TypeName="CoreMedModel.Employee_Customer">
+              <MappingFragment StoreEntitySet="Employee_Customer">
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="EC_Type" ColumnName="EC_Type" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CE_Country" ColumnName="CE_Country" />
+                <ScalarProperty Name="CE_State" ColumnName="CE_State" />
+                <ScalarProperty Name="CE_City" ColumnName="CE_City" />
+                <ScalarProperty Name="CE_Description" ColumnName="CE_Description" />
+                <ScalarProperty Name="C_ID_Fk" ColumnName="C_ID_Fk" />
+                <ScalarProperty Name="CE_Address" ColumnName="CE_Address" />
+                <ScalarProperty Name="CE_CellNumber" ColumnName="CE_CellNumber" />
+                <ScalarProperty Name="CE_PhoneNumber" ColumnName="CE_PhoneNumber" />
+                <ScalarProperty Name="CE_Email" ColumnName="CE_Email" />
+                <ScalarProperty Name="CE_Title" ColumnName="CE_Title" />
+                <ScalarProperty Name="CE_Name" ColumnName="CE_Name" />
+                <ScalarProperty Name="CE_Id" ColumnName="CE_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="CoreMedModel.Note">
+              <MappingFragment StoreEntitySet="Notes">
+                <ScalarProperty Name="Customer_Id_FK" ColumnName="Customer_Id_FK" />
+                <ScalarProperty Name="C_Id_FK" ColumnName="C_Id_FK" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+                <ScalarProperty Name="N_Discussion" ColumnName="N_Discussion" />
+                <ScalarProperty Name="N_Topic" ColumnName="N_Topic" />
+                <ScalarProperty Name="N_Id" ColumnName="N_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="CoreMedModel.Document">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="Doc_Writer_EnterByUser" ColumnName="Doc_Writer_EnterByUser" />
+                <ScalarProperty Name="Doc_Writer_LoggedIn" ColumnName="Doc_Writer_LoggedIn" />
+                <ScalarProperty Name="Doc_Number" ColumnName="Doc_Number" />
+                <ScalarProperty Name="Doc_Offer_Date" ColumnName="Doc_Offer_Date" />
+                <ScalarProperty Name="Doc_Type" ColumnName="Doc_Type" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Customer_Id_FK" ColumnName="Customer_Id_FK" />
+                <ScalarProperty Name="C_Id_FK" ColumnName="C_Id_FK" />
+                <ScalarProperty Name="D_Original_Name" ColumnName="D_Original_Name" />
+                <ScalarProperty Name="D_File" ColumnName="D_File" />
+                <ScalarProperty Name="D_Name" ColumnName="D_Name" />
+                <ScalarProperty Name="D_Id" ColumnName="D_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

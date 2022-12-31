@@ -1,0 +1,144 @@
+﻿@model StephenCoreMed.Models.ViewModels.GenerateTemp
+<style>
+    #document_manag_sidebar {
+        display: block !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 37px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 5px !important;
+    }
+</style>
+
+
+<link href="~/Scripts/bootstrap-datetimepicker.css" rel="stylesheet" />
+<link href="~/AdminLTEFiles/plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+<br />
+@using (Html.BeginForm("CreateDocument", "Document", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <!-- general form elements disabled -->
+                <div class="card card-warning">
+                    <div class="card-header" style="background-color:#343a40">
+                        <h3 class="card-title" style="color:white"> Generate Document From Template</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Document Name</label>
+                                    @Html.EditorFor(m => m.D_Name,new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.D_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Company</label>
+                                    @Html.DropDownListFor(model => model.C_Id_FK, (IEnumerable<SelectListItem>)ViewBag.CompanyList, "Select Company", new { @class = "form-control", id = "company_list" })
+                                    @Html.ValidationMessageFor(m => m.C_Id_FK, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Customer</label>
+                                    @Html.DropDownListFor(model => model.Customer_Id_FK, (IEnumerable<SelectListItem>)ViewBag.CustomerList, "Select Customer", new { @class = "form-control", id = "customer_list" })
+                                    @Html.ValidationMessageFor(m => m.Customer_Id_FK, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Document Writer</label>
+                                    @Html.EditorFor(model => model.Doc_Writer_NameByUser, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Doc_Writer_NameByUser, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Date</label>
+                                    @Html.EditorFor(model => model.Doc_Offer_Date, new { htmlAttributes = new { @class = "form-control", @id = "SelectedDate" } })
+                                    @Html.ValidationMessageFor(m => m.Doc_Offer_Date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Select Template</label>
+                                    @Html.DropDownListFor(model => model.D_Id, (IEnumerable<SelectListItem>)ViewBag.DocTempList, "Select Templete", new { @class = "form-control", id = "temp_list" })
+                                    @Html.ValidationMessageFor(m => m.D_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- input states -->
+                        <div class="form-group">
+                            <center> <button type="submit" class="btn btn-primary"> Create Document</button> </center>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- general form elements disabled -->
+                <!-- /.card -->
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+}
+<script src="~/AdminLTEFiles/plugins/jquery/jquery.js"></script>
+<script src="~/AdminLTEFiles/plugins/select2/js/select2.min.js"></script>
+<script src="~/AdminLTEFiles/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#company_list").select2();
+        $("#customer_list").select2();
+        $("#temp_list").select2();
+        $("#employee_list").select2();
+
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#SelectedDate').datetimepicker({
+
+        });
+    });
+    $("#company_list").change(function () {
+        $("#customer_list").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("LoadCustomers")',
+                dataType: 'json',
+                data: { CompanyID: $("#company_list").val() },
+                success: function (CustomerList) {
+                    $("#customer_list").append('<option value="">Select Customer</option>');
+                    $.each(CustomerList, function (i, customer) {
+                        $("#customer_list").append('<option value="' + customer.Value + '">' +
+                            customer.Text + '</option>');
+                    });
+                    $("#customer_list").prop("disabled", false);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Assets.');
+                }
+            });
+            return false;
+        })
+</script>
